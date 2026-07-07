@@ -1,11 +1,12 @@
 import useFetch from '../hooks/useFetch'
 
-function ItemList({ searchTerm, favorites, onToggleFavorite }) {
+function ItemList({ searchTerm, favorites, onToggleFavorite, blocked, onToggleBlocked }) {
   const { data, loading, error } = useFetch('https://rickandmortyapi.com/api/character')
   const allCharacters = data?.results ?? []
   
-  // Filtrar personajes por nombre (case-insensitive)
+  // Filtrar personajes: por nombre y excluir bloqueados
   const filteredCharacters = allCharacters.filter((character) =>
+    !blocked.includes(character.id) &&
     character.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
@@ -35,17 +36,26 @@ function ItemList({ searchTerm, favorites, onToggleFavorite }) {
             {filteredCharacters.map((character) => (
               <article key={character.id} className="col-12 col-sm-6 col-xl-4">
                 <div className="card h-100 border-0 shadow-sm overflow-hidden position-relative">
-                  <button
-                    onClick={() => onToggleFavorite(character.id)}
-                    className={`btn btn-sm position-absolute top-0 end-0 m-2 z-index-10 ${
-                      favorites.includes(character.id)
-                        ? 'btn-danger'
-                        : 'btn-outline-danger'
-                    }`}
-                    title={favorites.includes(character.id) ? 'Quitar de favoritos' : 'Agregar a favoritos'}
-                  >
-                    ♥
-                  </button>
+                  <div className="position-absolute top-0 end-0 m-2 d-flex gap-2" style={{ zIndex: 10 }}>
+                    <button
+                      onClick={() => onToggleFavorite(character.id)}
+                      className={`btn btn-sm ${
+                        favorites.includes(character.id)
+                          ? 'btn-danger'
+                          : 'btn-outline-danger'
+                      }`}
+                      title={favorites.includes(character.id) ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+                    >
+                      ♥
+                    </button>
+                    <button
+                      onClick={() => onToggleBlocked(character.id)}
+                      className="btn btn-sm btn-outline-secondary"
+                      title="Bloquear este elemento"
+                    >
+                      🔒
+                    </button>
+                  </div>
                   <img
                     src={character.image}
                     alt={character.name}

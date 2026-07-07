@@ -2,11 +2,13 @@ import { useState } from 'react'
 import SearchBar from './SearchBar'
 import ItemList from './ItemList'
 import FavoritesPanel from './FavoritesPanel'
+import BlockedPanel from './BlockedPanel'
 import StatsPanel from './StatsPanel'
 
 function MainLayout() {
   const [searchTerm, setSearchTerm] = useState('')
   const [favorites, setFavorites] = useState([])
+  const [blocked, setBlocked] = useState([])
 
   const toggleFavorite = (characterId) => {
     setFavorites((prevFavorites) =>
@@ -14,6 +16,23 @@ function MainLayout() {
         ? prevFavorites.filter((id) => id !== characterId)
         : [...prevFavorites, characterId]
     )
+  }
+
+  const toggleBlocked = (characterId) => {
+    setBlocked((prevBlocked) => {
+      const isCurrentlyBlocked = prevBlocked.includes(characterId)
+      
+      if (isCurrentlyBlocked) {
+        // Desbloquear: solo quitar de bloqueados
+        return prevBlocked.filter((id) => id !== characterId)
+      } else {
+        // Bloquear: agregar a bloqueados y quitar de favoritos si estaba
+        setFavorites((prevFavorites) =>
+          prevFavorites.filter((id) => id !== characterId)
+        )
+        return [...prevBlocked, characterId]
+      }
+    })
   }
 
   return (
@@ -30,13 +49,24 @@ function MainLayout() {
         <div className="row g-4">
           <div className="col-12 col-lg-8">
             <div className="d-flex flex-column gap-4">
-              <ItemList searchTerm={searchTerm} favorites={favorites} onToggleFavorite={toggleFavorite} />
-              <StatsPanel />
+              <ItemList 
+                searchTerm={searchTerm} 
+                favorites={favorites} 
+                onToggleFavorite={toggleFavorite}
+                blocked={blocked}
+                onToggleBlocked={toggleBlocked}
+              />
+              <StatsPanel 
+                totalCharacters={20}
+                favoritesCount={favorites.length}
+                blockedCount={blocked.length}
+              />
             </div>
           </div>
 
-          <div className="col-12 col-lg-4">
+          <div className="col-12 col-lg-4 d-flex flex-column gap-4">
             <FavoritesPanel favorites={favorites} onToggleFavorite={toggleFavorite} />
+            <BlockedPanel blocked={blocked} onToggleBlocked={toggleBlocked} />
           </div>
         </div>
       </div>

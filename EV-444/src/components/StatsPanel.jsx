@@ -1,4 +1,4 @@
-function StatsPanel() {
+function StatsPanel({ totalCharacters, favoritesCount, blockedCount }) {
   return (
     <section className="card shadow-sm border-0">
       <div className="card-body">
@@ -9,20 +9,20 @@ function StatsPanel() {
         <div className="row g-3">
           <div className="col-12 col-md-4">
             <div className="p-3 rounded-4 bg-light text-center">
-              <strong className="d-block fs-5">10</strong>
+              <strong className="d-block fs-5">{totalCharacters}</strong>
               <span className="text-muted small">Total</span>
             </div>
           </div>
           <div className="col-12 col-md-4">
             <div className="p-3 rounded-4 bg-light text-center">
-              <strong className="d-block fs-5">0</strong>
+              <strong className="d-block fs-5">{favoritesCount}</strong>
               <span className="text-muted small">Favoritos</span>
             </div>
           </div>
           <div className="col-12 col-md-4">
             <div className="p-3 rounded-4 bg-light text-center">
-              <strong className="d-block fs-5">100%</strong>
-              <span className="text-muted small">Activos</span>
+              <strong className="d-block fs-5">{blockedCount}</strong>
+              <span className="text-muted small">Bloqueados</span>
             </div>
           </div>
         </div>
