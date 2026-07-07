@@ -4,11 +4,12 @@ import ItemList from './ItemList'
 import FavoritesPanel from './FavoritesPanel'
 import BlockedPanel from './BlockedPanel'
 import StatsPanel from './StatsPanel'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 function MainLayout() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [favorites, setFavorites] = useState([])
-  const [blocked, setBlocked] = useState([])
+  const [favorites, setFavorites] = useLocalStorage('ev444_favorites', [])
+  const [blocked, setBlocked] = useLocalStorage('ev444_blocked', [])
 
   const toggleFavorite = (characterId) => {
     setFavorites((prevFavorites) =>
