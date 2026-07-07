@@ -1,8 +1,13 @@
 import useFetch from '../hooks/useFetch'
 
-function ItemList() {
+function ItemList({ searchTerm }) {
   const { data, loading, error } = useFetch('https://rickandmortyapi.com/api/character')
-  const characters = data?.results ?? []
+  const allCharacters = data?.results ?? []
+  
+  // Filtrar personajes por nombre (case-insensitive)
+  const filteredCharacters = allCharacters.filter((character) =>
+    character.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 
   return (
     <section className="card shadow-sm border-0">
@@ -12,7 +17,7 @@ function ItemList() {
             <h2 className="h5 mb-0">Listado principal</h2>
             <p className="mb-0 text-muted">Personajes de Rick and Morty</p>
           </div>
-          <span className="text-muted small">Mostrando {loading ? '...' : characters.length} elementos</span>
+          <span className="text-muted small">Mostrando {loading ? '...' : filteredCharacters.length} elementos</span>
         </div>
 
         {loading && (
@@ -25,9 +30,9 @@ function ItemList() {
           </div>
         )}
 
-        {!loading && !error && (
+        {!loading && !error && filteredCharacters.length > 0 && (
           <div className="row g-3">
-            {characters.map((character) => (
+            {filteredCharacters.map((character) => (
               <article key={character.id} className="col-12 col-sm-6 col-xl-4">
                 <div className="card h-100 border-0 shadow-sm overflow-hidden">
                   <img
@@ -44,6 +49,12 @@ function ItemList() {
                 </div>
               </article>
             ))}
+          </div>
+        )}
+
+        {!loading && !error && filteredCharacters.length === 0 && allCharacters.length > 0 && (
+          <div className="alert alert-info" role="alert">
+            <strong>No se encontraron resultados</strong> para "{searchTerm}". Intenta con otro término de búsqueda.
           </div>
         )}
       </div>
