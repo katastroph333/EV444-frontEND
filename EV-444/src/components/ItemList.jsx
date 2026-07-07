@@ -1,6 +1,6 @@
 import useFetch from '../hooks/useFetch'
 
-function ItemList({ searchTerm }) {
+function ItemList({ searchTerm, favorites, onToggleFavorite }) {
   const { data, loading, error } = useFetch('https://rickandmortyapi.com/api/character')
   const allCharacters = data?.results ?? []
   
@@ -34,7 +34,18 @@ function ItemList({ searchTerm }) {
           <div className="row g-3">
             {filteredCharacters.map((character) => (
               <article key={character.id} className="col-12 col-sm-6 col-xl-4">
-                <div className="card h-100 border-0 shadow-sm overflow-hidden">
+                <div className="card h-100 border-0 shadow-sm overflow-hidden position-relative">
+                  <button
+                    onClick={() => onToggleFavorite(character.id)}
+                    className={`btn btn-sm position-absolute top-0 end-0 m-2 z-index-10 ${
+                      favorites.includes(character.id)
+                        ? 'btn-danger'
+                        : 'btn-outline-danger'
+                    }`}
+                    title={favorites.includes(character.id) ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+                  >
+                    ♥
+                  </button>
                   <img
                     src={character.image}
                     alt={character.name}

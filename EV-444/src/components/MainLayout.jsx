@@ -6,6 +6,15 @@ import StatsPanel from './StatsPanel'
 
 function MainLayout() {
   const [searchTerm, setSearchTerm] = useState('')
+  const [favorites, setFavorites] = useState([])
+
+  const toggleFavorite = (characterId) => {
+    setFavorites((prevFavorites) =>
+      prevFavorites.includes(characterId)
+        ? prevFavorites.filter((id) => id !== characterId)
+        : [...prevFavorites, characterId]
+    )
+  }
 
   return (
     <main className="container-fluid py-4">
@@ -21,13 +30,13 @@ function MainLayout() {
         <div className="row g-4">
           <div className="col-12 col-lg-8">
             <div className="d-flex flex-column gap-4">
-              <ItemList searchTerm={searchTerm} />
+              <ItemList searchTerm={searchTerm} favorites={favorites} onToggleFavorite={toggleFavorite} />
               <StatsPanel />
             </div>
           </div>
 
           <div className="col-12 col-lg-4">
-            <FavoritesPanel />
+            <FavoritesPanel favorites={favorites} onToggleFavorite={toggleFavorite} />
           </div>
         </div>
       </div>
