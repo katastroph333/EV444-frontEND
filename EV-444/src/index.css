@@ -17,7 +17,12 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+
+  background-image: url("./assets/background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #root {
@@ -55,14 +60,14 @@ body {
   font-size: clamp(3.2rem, 7vw, 5rem);
   font-weight: 400;
   letter-spacing: .08rem;
-  color: #111827;
+  color: #ffffff;
   line-height: 1;
 }
 
 .app-badge {
   display: inline-block;
-  background: #111827;
-  color: white;
+  background: white;
+  color: black;
   padding: .35rem 9.rem;
   border-radius: 999px;
   font-size: .6rem;
@@ -440,7 +445,7 @@ body {
   text-align:center;
   font-family:Inter, sans-serif;
   font-size:.9rem;
-  color:#6b7280;
+  color:#ffffff;
 }
 
 .app-footer strong{
@@ -448,5 +453,5 @@ body {
   font-size:1.35rem;
   font-weight:400;
   letter-spacing:.04em;
-  color:#111827;
+  color:#ffffff;
 }
