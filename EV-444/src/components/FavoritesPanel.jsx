@@ -43,7 +43,7 @@ function FavoritesPanel({ favorites, onToggleFavorite }) {
                   className="btn btn-sm btn-danger"
                   title="Quitar de favoritos"
                 >
-                  ✕
+                  <i className="bi bi-heart-fill"></i>
                 </button>
               </div>
             ))}

@@ -15,14 +15,31 @@ function ItemList({ searchTerm, favorites, onToggleFavorite, blocked, onToggleBl
       <div className="card-body">
         <div className="d-flex justify-content-between align-items-center mb-3">
           <div>
-            <h2 className="h5 mb-0">Listado principal</h2>
-            <p className="mb-0 text-muted">Personajes de Rick and Morty</p>
+            <h2 className="h5 mb-1">Personajes</h2>
+
+            {searchTerm ? (
+              <p className="mb-0 text-muted">
+                Resultados para "<strong>{searchTerm}</strong>"
+              </p>
+            ) : (
+              <p className="mb-0 text-muted">
+                Explora los personajes de Rick and Morty
+              </p>
+            )}
           </div>
-          <span className="text-muted small">Mostrando {loading ? '...' : filteredCharacters.length} elementos</span>
+          <span className="text-muted small">
+            {loading 
+            ? 'Cargando...'
+            :searchTerm
+              ? `${filteredCharacters.length} encontrados`
+              : `${filteredCharacters.length} mostrados`}
+          </span>
         </div>
 
         {loading && (
-          <div className="text-center py-5 text-muted">Cargando personajes...</div>
+          <div className="text-center py-5 text-muted">
+            Cargando personajes...
+          </div>
         )}
 
         {error && (
@@ -35,38 +52,77 @@ function ItemList({ searchTerm, favorites, onToggleFavorite, blocked, onToggleBl
           <div className="row g-3">
             {filteredCharacters.map((character) => (
               <article key={character.id} className="col-12 col-sm-6 col-xl-4">
-                <div className="card h-100 border-0 shadow-sm overflow-hidden position-relative">
-                  <div className="position-absolute top-0 end-0 m-2 d-flex gap-2" style={{ zIndex: 10 }}>
+                <div className="card character-card h-100 border-0 overflow-hidden position-relative">
+
+                  <div
+                    className="position-absolute top-0 end-0 m-2 d-flex gap-2"
+                    style={{ zIndex: 10 }}
+                  >
                     <button
                       onClick={() => onToggleFavorite(character.id)}
-                      className={`btn btn-sm ${
+                      className={`btn btn-sm px-2 py-2 ${
                         favorites.includes(character.id)
                           ? 'btn-danger'
                           : 'btn-outline-danger'
                       }`}
-                      title={favorites.includes(character.id) ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+                      title={
+                        favorites.includes(character.id)
+                          ? 'Quitar de favoritos'
+                          : 'Agregar a favoritos'
+                      }
                     >
-                      ♥
+                      <i className={`bi ${
+                        favorites.includes(character.id)
+                          ? 'bi-heart-fill'
+                          : 'bi-heart'
+                      }`}></i>
                     </button>
+
                     <button
                       onClick={() => onToggleBlocked(character.id)}
-                      className="btn btn-sm btn-outline-secondary"
+                      className="btn btn-sm btn-outline-secondary px-2 py-2"
                       title="Bloquear este elemento"
                     >
-                      🔒
+                      <i className="bi bi-lock-fill"></i>
                     </button>
                   </div>
+
                   <img
                     src={character.image}
                     alt={character.name}
                     className="card-img-top"
-                    style={{ objectFit: 'cover', height: '220px' }}
+                    style={{ objectFit: 'cover', height: '280px' }}
                   />
+
                   <div className="card-body">
-                    <h3 className="h6 mb-1">{character.name}</h3>
-                    <p className="mb-1 text-muted small">{character.status} - {character.species}</p>
-                    <p className="mb-0 text-muted">{character.location.name}</p>
+                    <h3 className="h6 fw-bold mb-3">
+                      {character.name}
+                    </h3>
+                    
+                    <p className="mb-2">
+                      <span
+                        className={`badge ${
+                          character.status === 'Alive'
+                            ? 'bg-success'
+                            : character.status === 'Dead'
+                            ? 'bg-danger'
+                            : 'bg-warning text-dark'
+                        }`}
+                      >
+                       {character.status}
+                      </span>
+                    </p>
+
+                    <p className="mb-2 text-muted">
+                      {character.species}
+                    </p>
+
+                    <p className="mb-0 text-muted">
+                      {character.location.name}
+                     </p>
+                    
                   </div>
+
                 </div>
               </article>
             ))}
@@ -75,7 +131,8 @@ function ItemList({ searchTerm, favorites, onToggleFavorite, blocked, onToggleBl
 
         {!loading && !error && filteredCharacters.length === 0 && allCharacters.length > 0 && (
           <div className="alert alert-info" role="alert">
-            <strong>No se encontraron resultados</strong> para "{searchTerm}". Intenta con otro término de búsqueda.
+            <strong>No se encontraron resultados</strong> para "{searchTerm}".
+            Intenta con otro término de búsqueda.
           </div>
         )}
       </div>

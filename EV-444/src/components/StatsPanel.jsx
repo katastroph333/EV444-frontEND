@@ -10,7 +10,7 @@ function StatsPanel({ totalCharacters, favoritesCount, blockedCount }) {
           <div className="col-12 col-md-4">
             <div className="p-3 rounded-4 bg-light text-center">
               <strong className="d-block fs-5">{totalCharacters}</strong>
-              <span className="text-muted small">Total</span>
+              <span className="text-muted small">Personajes</span>
             </div>
           </div>
           <div className="col-12 col-md-4">

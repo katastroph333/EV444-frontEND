@@ -40,10 +40,9 @@ function BlockedPanel({ blocked, onToggleBlocked }) {
                 </div>
                 <button
                   onClick={() => onToggleBlocked(character.id)}
-                  className="btn btn-sm btn-secondary"
-                  title="Desbloquear"
+                  className="btn btn-secondary btn-sm"
                 >
-                  🔓
+                  <i className="bi bi-unlock-fill"></i>
                 </button>
               </div>
             ))}

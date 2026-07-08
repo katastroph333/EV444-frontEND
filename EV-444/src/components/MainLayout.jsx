@@ -22,12 +22,10 @@ function MainLayout() {
   const toggleBlocked = (characterId) => {
     setBlocked((prevBlocked) => {
       const isCurrentlyBlocked = prevBlocked.includes(characterId)
-      
+
       if (isCurrentlyBlocked) {
-        // Desbloquear: solo quitar de bloqueados
         return prevBlocked.filter((id) => id !== characterId)
       } else {
-        // Bloquear: agregar a bloqueados y quitar de favoritos si estaba
         setFavorites((prevFavorites) =>
           prevFavorites.filter((id) => id !== characterId)
         )
@@ -39,37 +37,66 @@ function MainLayout() {
   return (
     <main className="container-fluid py-4">
       <div className="mx-auto" style={{ maxWidth: '1280px' }}>
-        <header className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+
+        <header className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4 mb-4">
+
           <div>
-            <p className="text-uppercase fw-bold mb-1 text-primary small">Taller Front End</p>
-            <h1 className="h3 mb-0">Diseño de interfaz</h1>
+            <span className="badge bg-primary mb-3 px-3 py-2">
+              Rick and Morty API
+            </span>
+
+            <h1 className="display-5 fw-bold mb-0">
+               Rick and Morty Explorer
+            </h1>
           </div>
-          <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+
+          <SearchBar
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+          />
+
         </header>
 
         <div className="row g-4">
+
           <div className="col-12 col-lg-8">
+
             <div className="d-flex flex-column gap-4">
-              <ItemList 
-                searchTerm={searchTerm} 
-                favorites={favorites} 
+
+              <ItemList
+                searchTerm={searchTerm}
+                favorites={favorites}
                 onToggleFavorite={toggleFavorite}
                 blocked={blocked}
                 onToggleBlocked={toggleBlocked}
               />
-              <StatsPanel 
+
+              <StatsPanel
                 totalCharacters={20}
                 favoritesCount={favorites.length}
                 blockedCount={blocked.length}
               />
+
             </div>
+
           </div>
 
           <div className="col-12 col-lg-4 d-flex flex-column gap-4">
-            <FavoritesPanel favorites={favorites} onToggleFavorite={toggleFavorite} />
-            <BlockedPanel blocked={blocked} onToggleBlocked={toggleBlocked} />
+
+            <FavoritesPanel
+              favorites={favorites}
+              onToggleFavorite={toggleFavorite}
+            />
+
+            <BlockedPanel
+              blocked={blocked}
+              onToggleBlocked={toggleBlocked}
+            />
+
           </div>
+
         </div>
+
       </div>
     </main>
   )
