@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import logo from '../assets/logo.png'
 import SearchBar from './SearchBar'
 import ItemList from './ItemList'
 import FavoritesPanel from './FavoritesPanel'
@@ -41,13 +42,21 @@ function MainLayout() {
         <header className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4 mb-4">
 
           <div>
-            <span className="badge bg-primary mb-3 px-3 py-2">
+            <span className="app-badge">
               Rick and Morty API
             </span>
 
-            <h1 className="display-5 fw-bold mb-0">
-               Rick and Morty Explorer
-            </h1>
+            <div className="title-wrapper">
+              <img
+                src={logo}
+                alt="Rick and Morty"
+                className="app-logo"
+              />
+
+              <h1 className="app-title mb-0">
+                Rick and Morty Explorer
+              </h1>
+            </div>
           </div>
 
           <SearchBar
@@ -96,6 +105,15 @@ function MainLayout() {
           </div>
 
         </div>
+
+        <footer className="app-footer">
+          <p>
+            Desarrollado por: 
+            <strong> Scarlett Aguilera</strong> •
+            <strong> Carlos Seura</strong> •
+            <strong> Fernando Villagran</strong>
+          </p>
+        </footer>
 
       </div>
     </main>

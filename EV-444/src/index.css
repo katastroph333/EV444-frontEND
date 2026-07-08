@@ -32,10 +32,12 @@ body {
 
 .app-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 20px;
+  justify-content: center;
+  gap: 1px;
+  margin-bottom: 2.5rem;
+  text-align: center;
 }
 
 .eyebrow {
@@ -47,9 +49,45 @@ body {
   font-weight: 700;
 }
 
-.app-header h1 {
+.app-title {
   margin: 0;
-  font-size: clamp(1.5rem, 2.2vw, 2.2rem);
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(3.2rem, 7vw, 5rem);
+  font-weight: 400;
+  letter-spacing: .08rem;
+  color: #111827;
+  line-height: 1;
+}
+
+.app-badge {
+  display: inline-block;
+  background: #111827;
+  color: white;
+  padding: .35rem 9.rem;
+  border-radius: 999px;
+  font-size: .6rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.title-wrapper{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1rem;
+}
+
+.app-logo{
+  width:90px;
+  height:90px;
+  object-fit:contain;
+  transition:transform .25s ease;
+}
+
+.title-wrapper:hover .app-logo{
+  transform:rotate(-8deg) scale(1.08);
 }
 
 .search-bar {
@@ -296,6 +334,7 @@ body {
 
 .search-wrapper {
   position: relative;
+  margin-top: 38px;
 }
 
 .search-icon {
@@ -383,4 +422,31 @@ body {
   .stats-grid{
     grid-template-columns:1fr;
   }
+
+}
+
+.app-footer{
+  width:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+  margin-top:2rem;
+  padding:1rem 0 2rem;
+}
+
+.app-footer p{
+  margin:0;
+  text-align:center;
+  font-family:Inter, sans-serif;
+  font-size:.9rem;
+  color:#6b7280;
+}
+
+.app-footer strong{
+  font-family:"Bebas Neue", sans-serif;
+  font-size:1.35rem;
+  font-weight:400;
+  letter-spacing:.04em;
+  color:#111827;
 }
